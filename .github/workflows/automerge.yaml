@@ -21,7 +21,7 @@ jobs:
     steps:
       - uses: "pascalgn/automerge-action@v0.4.2"
         env:
-          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TEST_API_TOKEN }}"
           MERGE_LABELS: "mergeready,!donotmerge,!after next release"
           MERGE_METHOD: "squash"
           UPDATE_LABELS: "mergeready"
