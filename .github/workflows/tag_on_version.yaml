@@ -1,0 +1,23 @@
+name: Tag repository with version on version change 
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - config/VERSION
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Push tag
+      run: |
+        if git diff --exit-code HEAD^ -- config/VERSION; then
+          echo "No change in VERSION:`cat config/VERSION`."
+        else
+          tag="v$(cat config/VERSION)"
+          git tag "${tag}"
+          git push "https://${GITHUB_ACTOR}:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git" refs/tags/"${tag}"
+        fi
